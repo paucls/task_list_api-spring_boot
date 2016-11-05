@@ -1,0 +1,89 @@
+# Example YAML to get you started quickly.
+# Be aware that YAML has indentation based scoping.
+# Code completion support is available so start typing for available options.
+swagger: '2.0'
+
+# This is your document metadata
+info:
+  version: "1.0.0"
+  title: Tasks List API
+
+# Describe your paths here
+paths:
+  # Get all tasks path endpoint.
+  /tasks:
+    get:
+      description: |
+        Gets the list of `Task` objects for the current user.
+      responses:
+        200:
+          description: An array of tasks
+          schema:
+            $ref: '#/definitions/Task'
+
+    # Create task path endpoint.
+    post:
+      description: |
+        Creates a new `Task` object for the current user.
+      parameters:
+        - name: task
+          in: body
+          description: Task to add to the list
+          required: true
+          schema:
+            $ref: '#/definitions/Task'
+      responses:
+        200:
+          description: Task created successfully
+          schema:
+            $ref: '#/definitions/Task'
+
+  # Update task path endpoint.
+  /tasks/{id}:
+    post:
+      description: |
+        Updates an existing `Task` object.
+      parameters:
+        - name: id
+          in: path
+          description: Task identifier
+          required: true
+          type: string
+        - name: task
+          in: body
+          description: Task to update
+          required: true
+          schema:
+            $ref: '#/definitions/Task'
+      responses:
+        200:
+          description: Task updated successfully
+    delete:
+      description: |
+        Remove a `Task` for the authenticated user.
+      parameters:
+        - name: id
+          in: path
+          description: Task identifier
+          required: true
+          type: string
+      responses:
+        204:
+          description: Task deleted successfully
+  
+definitions:
+  Task:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique identifier
+      name:
+        type: string
+        description: Task name
+      userId:
+        type: string
+        description: User that owns the task
+      done:
+        type: boolean
+        description: Indicates if the task is already done or not.
