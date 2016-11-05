@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.SpringCodegen", date = "2016-11-05T12:06:02.530Z")
@@ -37,7 +38,10 @@ public class TasksApiController implements TasksApi {
     public ResponseEntity<Void> tasksIdDelete(
             @ApiParam(value = "Task identifier", required = true) @PathVariable("id") String id
     ) {
-        // do some magic!
+        stubTasks = stubTasks.stream()
+                .filter(task -> !task.getId().equals(id))
+                .collect(Collectors.toList());
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
