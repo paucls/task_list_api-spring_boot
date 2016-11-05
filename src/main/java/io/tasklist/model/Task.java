@@ -16,7 +16,15 @@ public class Task {
 
     private String userId = null;
 
-    private Boolean done = null;
+    private Boolean done = false;
+
+    public Task() {
+    }
+
+    public Task(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Task id(String id) {
         this.id = id;

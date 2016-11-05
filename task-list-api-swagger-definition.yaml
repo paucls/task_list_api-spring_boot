@@ -17,9 +17,11 @@ paths:
         Gets the list of `Task` objects for the current user.
       responses:
         200:
-          description: An array of tasks
+          description: An array of `Task` objects
           schema:
-            $ref: '#/definitions/Task'
+            type: array
+            items:
+              $ref: '#/definitions/Task'
 
     # Create task path endpoint.
     post:
