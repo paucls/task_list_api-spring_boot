@@ -1,6 +1,8 @@
 # Task List API
 A Swagger generated Spring Boot Server for a task list REST API.
 
+[![Build Status](https://travis-ci.org/paucls/task_list_api-spring_boot.svg?branch=master)](https://travis-ci.org/paucls/task_list_api-spring_boot)
+
 ## API Spec
 <!---
 [![swagger-api validator-badge](http://online.swagger.io/validator?url=https://raw.githubusercontent.com/paucls/task_list_api-spring_boot/master/task-list-api-swagger-definition.yaml)](./task-list-api-swagger-definition.yaml)
