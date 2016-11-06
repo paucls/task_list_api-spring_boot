@@ -1,0 +1,115 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Tasks List API"
+    },
+    "paths": {
+        "/tasks": {
+            "get": {
+                "description": "Gets the list of `Task` objects for the current user.\n",
+                "responses": {
+                    "200": {
+                        "description": "An array of `Task` objects",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Task"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Creates a new `Task` object for the current user.\n",
+                "parameters": [
+                    {
+                        "name": "task",
+                        "in": "body",
+                        "description": "Task to add to the list",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Task"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/Task"
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{id}": {
+            "post": {
+                "description": "Updates an existing `Task` object.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task identifier",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "task",
+                        "in": "body",
+                        "description": "Task to update",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/Task"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Task updated successfully"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove a `Task` for the authenticated user.\n",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Task identifier",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Task deleted successfully"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Task": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "Unique identifier"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "Task name"
+                },
+                "userId": {
+                    "type": "string",
+                    "description": "User that owns the task"
+                },
+                "done": {
+                    "type": "boolean",
+                    "description": "Indicates if the task is already done or not."
+                }
+            }
+        }
+    }
+}
