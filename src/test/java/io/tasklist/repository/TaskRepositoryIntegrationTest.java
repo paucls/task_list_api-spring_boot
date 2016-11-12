@@ -23,7 +23,7 @@ public class TaskRepositoryIntegrationTest {
     TaskRepository taskRepository;
 
     @Test
-    public void findAll_returnsAllTasks() {
+    public void testFindAll() {
         List<Task> taskList = taskRepository.findAll();
 
         assertThat(taskList.size(), is(0));
