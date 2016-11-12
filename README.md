@@ -1,5 +1,5 @@
 # Task List API
-A Swagger generated Spring Boot Server for a task list REST API.
+A Tasks List REST API service. Uses Spring Boot, Swagger, Spring Data JPA, H2 Database.
 
 [![Build Status](https://travis-ci.org/paucls/task_list_api-spring_boot.svg?branch=master)](https://travis-ci.org/paucls/task_list_api-spring_boot)
 
