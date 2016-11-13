@@ -4,8 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tasklist.Swagger2SpringBoot;
 import io.tasklist.model.Task;
+import io.tasklist.repository.TaskRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.http.HttpEntity;
@@ -27,6 +29,9 @@ import static org.hamcrest.core.IsEqual.equalTo;
 public class TasksApiControllerWebIntegrationTest {
 
     private static String URL = "http://localhost:8080/tasks";
+
+    @Autowired
+    TaskRepository taskRepository;
 
     @Test
     public void testTasksGet() throws IOException {
@@ -52,8 +57,17 @@ public class TasksApiControllerWebIntegrationTest {
         assertThat(createdTask, notNullValue());
         assertThat(createdTask.getId(), notNullValue());
         assertThat(createdTask.getName(), is("task-name"));
+    }
 
-        System.out.println(createdTask);
+    @Test
+    public void testTasksIdDelete() {
+        Task task = taskRepository.saveAndFlush(new Task());
+        String entityUrl = URL + "/" + task.getId();
+        RestTemplate restTemplate = new RestTemplate();
+
+        restTemplate.delete(entityUrl);
+
+        assertThat(taskRepository.count(), is(0L)); 
     }
 
 }
