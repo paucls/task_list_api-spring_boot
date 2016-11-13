@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.tasklist.Swagger2SpringBoot;
 import io.tasklist.model.Task;
 import io.tasklist.repository.TaskRepository;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -33,8 +37,34 @@ public class TasksApiControllerWebIntegrationTest {
     @Autowired
     TaskRepository taskRepository;
 
+    private Task testTask;
+    private int testTasksCount = 3;
+
+    @Before
+    public void setup() {
+        testTask = taskRepository.saveAndFlush(new Task("task1-id", "task1-name"));
+        taskRepository.saveAndFlush(new Task());
+        taskRepository.saveAndFlush(new Task());
+    }
+
+    @After
+    public void tearDown() {
+        taskRepository.deleteAll();
+    }
+
     @Test
     public void testTasksGet() throws IOException {
+        RestTemplate restTemplate = new RestTemplate();
+        Task[] response = restTemplate.getForObject(URL, Task[].class);
+
+        List<Task> allTasks = Arrays.asList(response);
+
+        assertThat(allTasks.size(), is(testTasksCount));
+    }
+
+    @Test
+    public void testTasksGet_statusCode() throws IOException {
+        taskRepository.deleteAll();
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity response = restTemplate.getForEntity(URL, String.class);
 
@@ -61,13 +91,12 @@ public class TasksApiControllerWebIntegrationTest {
 
     @Test
     public void testTasksIdDelete() {
-        Task task = taskRepository.saveAndFlush(new Task());
-        String entityUrl = URL + "/" + task.getId();
+        String entityUrl = URL + "/" + testTask.getId();
         RestTemplate restTemplate = new RestTemplate();
 
         restTemplate.delete(entityUrl);
 
-        assertThat(taskRepository.count(), is(0L)); 
+        assertThat((int) taskRepository.count(), is(testTasksCount - 1));
     }
 
 }
