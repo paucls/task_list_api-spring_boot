@@ -32,16 +32,19 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @WebIntegrationTest
 public class TasksApiControllerWebIntegrationTest {
 
-    private static String URL = "http://localhost:8080/tasks";
+    private static String URL = "http://localhost:8080/tasks/";
 
     @Autowired
-    TaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
+    private RestTemplate restTemplate;
     private Task testTask;
     private int testTasksCount = 3;
 
     @Before
     public void setup() {
+        restTemplate = new RestTemplate();
+
         testTask = taskRepository.saveAndFlush(new Task("task1-id", "task1-name"));
         taskRepository.saveAndFlush(new Task());
         taskRepository.saveAndFlush(new Task());
@@ -54,7 +57,6 @@ public class TasksApiControllerWebIntegrationTest {
 
     @Test
     public void testTasksGet() throws IOException {
-        RestTemplate restTemplate = new RestTemplate();
         Task[] response = restTemplate.getForObject(URL, Task[].class);
 
         List<Task> allTasks = Arrays.asList(response);
@@ -65,7 +67,6 @@ public class TasksApiControllerWebIntegrationTest {
     @Test
     public void testTasksGet_statusCode() throws IOException {
         taskRepository.deleteAll();
-        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity response = restTemplate.getForEntity(URL, String.class);
 
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
@@ -79,8 +80,6 @@ public class TasksApiControllerWebIntegrationTest {
 
     @Test
     public void testTasksPost() {
-        RestTemplate restTemplate = new RestTemplate();
-
         HttpEntity<Task> request = new HttpEntity<>(new Task(null, "task-name"));
         Task createdTask = restTemplate.postForObject(URL, request, Task.class);
 
@@ -90,9 +89,20 @@ public class TasksApiControllerWebIntegrationTest {
     }
 
     @Test
+    public void testTasksIdPost() {
+        testTask.setDone(true);
+        String entityUrl = URL + testTask.getId();
+        HttpEntity<Task> request = new HttpEntity<>(testTask);
+
+        restTemplate.postForObject(entityUrl, request, Void.class);
+
+        Task updatedTask = taskRepository.findOne(testTask.getId());
+        assertThat(updatedTask.getDone(), is(true));
+    }
+
+    @Test
     public void testTasksIdDelete() {
-        String entityUrl = URL + "/" + testTask.getId();
-        RestTemplate restTemplate = new RestTemplate();
+        String entityUrl = URL + testTask.getId();
 
         restTemplate.delete(entityUrl);
 
