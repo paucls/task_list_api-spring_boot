@@ -22,3 +22,12 @@ You can view the api documentation in swagger-ui by pointing to
 http://localhost:8080/  
 
 Change default port value in application.properties
+
+## Documentation
+Links to some of the articles and documentation used to implement this project:
+- https://app.pluralsight.com/library/courses/spring-boot-first-application
+- https://spring.io/guides/gs/spring-boot/
+- http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+- https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku
+- http://www.baeldung.com/rest-template
+- https://blog.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/
