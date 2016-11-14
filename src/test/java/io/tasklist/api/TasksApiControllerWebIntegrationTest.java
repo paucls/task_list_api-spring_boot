@@ -2,7 +2,7 @@ package io.tasklist.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tasklist.Swagger2SpringBoot;
+import io.tasklist.Application;
 import io.tasklist.model.Task;
 import io.tasklist.repository.TaskRepository;
 import org.junit.After;
@@ -28,7 +28,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(Swagger2SpringBoot.class)
+@SpringApplicationConfiguration(Application.class)
 @WebIntegrationTest
 public class TasksApiControllerWebIntegrationTest {
 

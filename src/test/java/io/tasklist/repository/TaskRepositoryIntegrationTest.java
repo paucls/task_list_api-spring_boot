@@ -1,6 +1,6 @@
 package io.tasklist.repository;
 
-import io.tasklist.Swagger2SpringBoot;
+import io.tasklist.Application;
 import io.tasklist.model.Task;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +15,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(Swagger2SpringBoot.class)
+@SpringApplicationConfiguration(Application.class)
 @WebAppConfiguration
 public class TaskRepositoryIntegrationTest {
 
