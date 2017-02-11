@@ -28,9 +28,14 @@ https://paucls-task-list-api.herokuapp.com/
 
 ## Documentation
 Links to some of the articles and documentation used to implement this project:
+
+1.0.0
 - https://app.pluralsight.com/library/courses/spring-boot-first-application
 - https://spring.io/guides/gs/spring-boot/
 - http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 - https://devcenter.heroku.com/articles/deploying-spring-boot-apps-to-heroku
 - http://www.baeldung.com/rest-template
 - https://blog.jayway.com/2014/07/04/integration-testing-a-spring-boot-application/
+
+1.1.0
+- https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4
