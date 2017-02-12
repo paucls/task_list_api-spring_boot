@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- 
+- Updated spring boot from version 1.3.5 to 1.4.4
+- Refactored tests to use new spring boot test improvements.
 
 ### Changed
 - 
