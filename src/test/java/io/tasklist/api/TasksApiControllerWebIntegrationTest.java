@@ -2,7 +2,6 @@ package io.tasklist.api;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.tasklist.Application;
 import io.tasklist.model.Task;
 import io.tasklist.repository.TaskRepository;
 import org.junit.After;
@@ -10,13 +9,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -27,24 +26,23 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(Application.class)
-@WebIntegrationTest
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class TasksApiControllerWebIntegrationTest {
 
-    private static String URL = "http://localhost:8080/tasks/";
+    private static String URL = "/tasks/";
 
     @Autowired
     private TaskRepository taskRepository;
 
-    private RestTemplate restTemplate;
+    @Autowired
+    private TestRestTemplate restTemplate;
+
     private Task testTask;
     private int testTasksCount = 3;
 
     @Before
     public void setup() {
-        restTemplate = new RestTemplate();
-
         testTask = taskRepository.saveAndFlush(new Task("task1-id", "task1-name"));
         taskRepository.saveAndFlush(new Task());
         taskRepository.saveAndFlush(new Task());
