@@ -39,3 +39,4 @@ Links to some of the articles and documentation used to implement this project:
 
 1.1.0
 - https://spring.io/blog/2016/04/15/testing-improvements-in-spring-boot-1-4
+- http://stackoverflow.com/questions/41673151/how-do-do-slice-testing-in-spring-boot-1-4-using-datajpatest-with-springfox-en
